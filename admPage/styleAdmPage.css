@@ -1,0 +1,27 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+  margin: 0 auto 0 auto;
+}
+
+table, th, td {
+  border: 1px solid rgb(151, 52, 52);
+}
+
+th, td {
+  padding: 10px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+header {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+/*# sourceMappingURL=style.css.map */
