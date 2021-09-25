@@ -1,5 +1,4 @@
 <?php
-
 require_once "./DB/Conexao.php";
 session_start();
 
@@ -66,7 +65,6 @@ class Loguin{
         $stmt->execute();
         $stmt->store_result();
         if($stmt->num_rows > 0){            
-            echo $parametros[0];
             $sql = "SELECT userName from usuarios WHERE email = '$parametros[0]' ";
             $result = $conexao->query($sql);
             $name = $result->fetch_assoc();
@@ -117,6 +115,11 @@ class Loguin{
 
     <div class="obs">
         <p>Entre com o email: adm@adm.com e a senha: adm para poder excluir e editar usuários.</p>
+    </div>
+
+    <div class="icons">
+        <a href="https://www.linkedin.com/in/carlos-augusto-6732811a5/"> <img src="linkedin.png" alt="foto"> </a> 
+        <a href="https://github.com/iCarlosAugusto/Registro-Loguin-PHP"> <img src="github.png" alt="foto2" href=""> </a>
     </div>
 
 </body>
