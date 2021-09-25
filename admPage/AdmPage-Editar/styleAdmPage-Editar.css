@@ -43,4 +43,12 @@ h1 {
   color: white;
 }
 
+.erros {
+  width: 400px;
+  margin: 0 auto 0 auto;
+  text-align: center;
+  background-color: red;
+  color: white;
+}
+
 /*# sourceMappingURL=style.css.map */
