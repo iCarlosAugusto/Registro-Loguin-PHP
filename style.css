@@ -41,6 +41,12 @@ input {
   outline: none;
 }
 
+img{
+  width: 50px;
+  cursor: pointer;
+}
+
+
 .erros {
   margin: 0 auto;
   width: 400px;
@@ -67,5 +73,3 @@ a {
   text-align: center;
   color: white;
 }
-
-/*# sourceMappingURL=style.css.map */
