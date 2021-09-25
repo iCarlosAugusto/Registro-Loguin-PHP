@@ -83,7 +83,7 @@ class AdmPage{
                     <td> <?php echo $user[2]; ?></td>
                     <td> <?php echo $user[3]; ?></td>
                     <td> <a href="./index.php?excluir=<?=$user[0]?>"> Excluir</a> </td>
-                    <td> <a href="./AdmPage-Editar/index.php?editar=<?=$user[0]?>"> Editar</a> </td>
+                    <td> <a href="./AdmPage-Editar/index.php?editar=<?=$user[0]?>&userName=<?=$user[1]?>&email=<?=$user[2]?>"> Editar</a> </td>
                 </tr>
 
             <?php } 
