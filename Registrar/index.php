@@ -1,13 +1,9 @@
 <?php
 use function PHPSTORM_META\type;
+require_once "VerifyEmptyInput.php";
 require_once "../DB/Conexao.php";
 
-if(count($_POST) > 0){
-        $log = new Registrar($_POST['email'], $_POST['password'], $_POST['passwordConfirm'], $_POST['userName']);
-    }
-    
-    class Registrar{
-
+    class Registrar extends VerifyEmptyInput{
         private $email;
         private $password;
         private $passwordConfirm;
@@ -49,50 +45,30 @@ if(count($_POST) > 0){
             $this->setPassword($password);
             $this->setPasswordConfirm($passwordConfirm);
             $this->setUserName($userName);
-            $this->verifyEmptyFields($this->getEmail(), $this->getPassword(), $this->getPasswordConfirm(), $this->getUserName());
+
+            //Chama os métodos da classe abstrata para verificar se os input's estãom vazios
+            $this->verifyUserName($userName);
+            $this->verifyEmail($email);
+            $this->verifyPassword($password, $passwordConfirm);
+
+            //Chama a função para ver se a array erros está vazio.
+            $this->isErrosEmpty($this->getEmail(), $this->getPassword(), $this->getUserName());
         }
 
-        private function verifyEmptyFields($email, $senha, $passwordConfirm, $userName){
-            $userName == "" ? $GLOBALS['erros']['userName'] = "É necessário um nome de usuário  </br>" : null;
-
-            if(trim($email) !== ""){
-               
-                if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                    $GLOBALS['erros']['email'] = "Email inválido. </br>";
-               }
-            }else{
-                $GLOBALS['erros']['email'] = "Email vazio, o campo é obrigatório. </br>";
-            }
-            
-            if(trim($senha) !== ""){
-                if(strlen($senha) < 6)
-                 $GLOBALS['erros']['password'] = "Senha curta, pelo menos 6 caratheres. </br>";
-
-                 if(trim($passwordConfirm !== "")){
-                     if($senha !== $passwordConfirm){
-                    $GLOBALS['erros']['password'] = "As senhas não batem, tente novamente  </br>.";
-                    }
-                }else{
-                    $GLOBALS['erros']['password'] = "Você precisa confirmar a sua senha  </br>";
-                }
-            }else{
-                $GLOBALS['erros']['password'] = "Senha está vazia, o campo é obrigatório. </br>";
-            }
-
+            //Caso o array esteja vazio, verifica se o usuário já consta no DB.
+            public function isErrosEmpty($email, $password, $userName){
                 if(empty($GLOBALS['erros']['password']) && empty($GLOBALS['erros']['email']) && empty($GLOBALS['erros']['userName'])){
                     $this->setEmail($email);
-                    $this->setPassword($senha);
+                    $this->setPassword($password);
                     $this->setUserName($userName);
                     $this->verifyIfUserExists();
                 }
-        }
-
+            }
+             
+        //Verifica no DB se já existe nome e email
         private function verifyIfUserExists(){
             $email = $this->getEmail();
             $userName = $this->getUserName();
-
-            echo "$email";
-            echo "$userName";
 
             $conexao = novaConexao();
 
@@ -113,6 +89,7 @@ if(count($_POST) > 0){
                 }  
             }
 
+        //Adiciona no DB.
         private function AddUserIntoDB(){
             $conexao = novaConexao();
             $admPermission = 0;
@@ -133,6 +110,11 @@ if(count($_POST) > 0){
             }
     }
 }
+
+if(count($_POST) > 0){
+    $reg = new Registrar($_POST['email'], $_POST['password'], $_POST['passwordConfirm'], $_POST['userName']);
+}
+
 ?>
 
 
@@ -175,5 +157,6 @@ if(count($_POST) > 0){
         </form>
         <a href="../index.php">Já tem uma conta? Faça o Loguin!</a>
     </div>
+
 </body>
 </html>
